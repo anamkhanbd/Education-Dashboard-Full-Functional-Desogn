@@ -16,7 +16,8 @@ import {
   PenTool,
   Calendar,
   CreditCard,
-  UserCheck
+  UserCheck,
+  ClipboardList
 } from 'lucide-react';
 import { MenuItem } from './types';
 
@@ -147,8 +148,27 @@ export const MENU_ITEMS: MenuItem[] = [
       { id: 'st-10', label: 'Class Ten', labelBn: '১০ম শ্রেণী', path: '/students/10' },
     ]
   },
-  { id: 'admission', label: 'Admission', labelBn: 'ভর্তি', icon: UserCheck, path: '/admission' },
-  { id: 'exam', label: 'Exams & Result', labelBn: 'পরীক্ষা ও ফলাফল', icon: FileText, path: '/exams' },
+  { 
+    id: 'admission', 
+    label: 'Admission', 
+    labelBn: 'ভর্তি', 
+    icon: UserCheck, 
+    subItems: [
+        { id: 'adm-info', label: 'Admission Info', labelBn: 'ভর্তি তথ্য', path: '/admission/info' },
+        { id: 'adm-form', label: 'Admission Form', labelBn: 'ভর্তি ফরম', path: '/admission/form' },
+    ]
+  },
+  { 
+    id: 'exams', 
+    label: 'Exams & Result', 
+    labelBn: 'পরীক্ষা ও ফলাফল', 
+    icon: FileText,
+    subItems: [
+        { id: 'ex-notice', label: 'Exam Notices', labelBn: 'পরীক্ষার নোটিশ', path: '/exams/notices' },
+        { id: 'ex-result-manual', label: 'Manual Result', labelBn: 'ম্যানুয়াল ফলাফল', path: '/exams/manual-result' },
+        { id: 'ex-result-online', label: 'Online Result', labelBn: 'অনলাইন ফলাফল', path: '/exams/online-result' },
+    ]
+  },
   { id: 'gallery', label: 'Gallery', labelBn: 'গ্যালারি', icon: Image, path: '/gallery' },
   { id: 'contact', label: 'Contact', labelBn: 'যোগাযোগ', icon: Phone, path: '/contact' },
   { id: 'settings', label: 'Settings', labelBn: 'সেটিংস', icon: Settings, path: '/settings' },

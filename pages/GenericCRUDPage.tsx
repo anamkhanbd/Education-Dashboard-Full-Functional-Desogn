@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Card } from '../components/UI/Card';
-import { Plus, Edit2, Trash2, Search, X, FileText } from 'lucide-react';
+import { Plus, Edit2, Trash2, Search, X, FileText, Image as ImageIcon } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface Column {
   key: string;
   label: string;
-  type?: 'text' | 'number' | 'date' | 'select' | 'file';
+  type?: 'text' | 'number' | 'date' | 'select' | 'file' | 'image';
   options?: string[];
   accept?: string;
 }
@@ -51,11 +51,19 @@ export const GenericCRUDPage: React.FC<GenericCRUDPageProps> = ({ title, columns
     setIsModalOpen(true);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, key: string, type: 'file' | 'image') => {
       const file = e.target.files?.[0];
       if (file) {
-          // Mock file upload by storing the name
-          setFormData({ ...formData, [key]: file.name });
+          if (type === 'image') {
+              // Create a fake local URL for preview
+              const reader = new FileReader();
+              reader.onload = (ev) => {
+                  setFormData({ ...formData, [key]: ev.target?.result });
+              };
+              reader.readAsDataURL(file);
+          } else {
+              setFormData({ ...formData, [key]: file.name });
+          }
       }
   };
 
@@ -121,6 +129,14 @@ export const GenericCRUDPage: React.FC<GenericCRUDPageProps> = ({ title, columns
                               <FileText size={16} />
                               {item[col.key]}
                           </div>
+                      ) : col.type === 'image' ? (
+                          item[col.key] ? (
+                            <img src={item[col.key]} alt="Thumbnail" className="w-10 h-10 rounded-full object-cover border border-gray-200" />
+                          ) : (
+                            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-400">
+                                <ImageIcon size={16} />
+                            </div>
+                          )
                       ) : (
                         item[col.key]
                       )}
@@ -173,14 +189,22 @@ export const GenericCRUDPage: React.FC<GenericCRUDPageProps> = ({ title, columns
                       <option value="">Select...</option>
                       {col.options?.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                     </select>
-                  ) : col.type === 'file' ? (
-                      <input
-                        type="file"
-                        accept={col.accept}
-                        onChange={(e) => handleFileChange(e, col.key)}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--color-primary)]"
-                        required={!editingItem} // Required only on add
-                      />
+                  ) : col.type === 'file' || col.type === 'image' ? (
+                      <div className="space-y-2">
+                          <input
+                            type="file"
+                            accept={col.type === 'image' ? 'image/*' : col.accept}
+                            onChange={(e) => handleFileChange(e, col.key, col.type as 'file' | 'image')}
+                            className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[var(--color-primary)] file:text-white hover:file:bg-[var(--color-primary)]/90"
+                            required={!editingItem && !formData[col.key]} // Required only on add or if no data
+                          />
+                          {formData[col.key] && col.type === 'image' && (
+                              <img src={formData[col.key]} alt="Preview" className="h-20 w-20 object-cover rounded-lg border border-gray-300" />
+                          )}
+                          {formData[col.key] && col.type === 'file' && (
+                              <p className="text-sm text-gray-500">Selected: {formData[col.key]}</p>
+                          )}
+                      </div>
                   ) : (
                     <input
                       type={col.type || 'text'}

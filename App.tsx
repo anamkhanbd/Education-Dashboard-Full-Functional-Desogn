@@ -11,17 +11,50 @@ import { LogoTitlePage } from './pages/hero/LogoTitle';
 import { BannerCoverPage } from './pages/hero/BannerCover';
 import { MapsPage } from './pages/Maps';
 import { AboutUsPage } from './pages/AboutUs';
+import { SingleContentPage } from './pages/academic/SingleContentPage';
+import { ClassRoutinePage } from './pages/academic/ClassRoutinePage';
+import { HolidayCalendarPage } from './pages/academic/HolidayCalendarPage';
+import { AdmissionFormPage } from './pages/admission/AdmissionFormPage';
+import { OnlineResultPage } from './pages/exams/OnlineResultPage';
+import { GalleryPage } from './pages/GalleryPage';
+import { ContactPage } from './pages/ContactPage';
 
 // Mock data
 const mockTeachers = [
-  { id: '1', name: 'Rahim Uddin', designation: 'Assistant Teacher', subject: 'Math', phone: '01711223344', status: 'Active' },
-  { id: '2', name: 'Karim Ahmed', designation: 'Senior Teacher', subject: 'English', phone: '01811223344', status: 'Active' },
-  { id: '3', name: 'Salma Begum', designation: 'Lecturer', subject: 'Bangla', phone: '01911223344', status: 'Inactive' },
+  { id: '1', name: 'Rahim Uddin', designation: 'Assistant Teacher', subject: 'Math', phone: '01711223344', status: 'Active', photo: 'https://i.pravatar.cc/150?u=1' },
+  { id: '2', name: 'Karim Ahmed', designation: 'Senior Teacher', subject: 'English', phone: '01811223344', status: 'Active', photo: 'https://i.pravatar.cc/150?u=2' },
+  { id: '3', name: 'Salma Begum', designation: 'Lecturer', subject: 'Bangla', phone: '01911223344', status: 'Inactive', photo: 'https://i.pravatar.cc/150?u=3' },
+];
+
+const mockStaff = [
+    { id: '1', name: 'Abdul Alim', designation: 'Office Assistant', phone: '01700000000', status: 'Active', photo: 'https://i.pravatar.cc/150?u=4' },
+    { id: '2', name: 'Jamal Hossain', designation: 'Cleaner', phone: '01700000001', status: 'Active', photo: 'https://i.pravatar.cc/150?u=5' },
+    { id: '3', name: 'Kuddus Miah', designation: 'Guard', phone: '01700000002', status: 'Active', photo: 'https://i.pravatar.cc/150?u=6' },
+];
+
+const mockCommittee = [
+    { id: '1', name: 'Hazi Md. Mohsin', designation: 'Chairman', phone: '01800000001', joinDate: '2020-01-01', photo: 'https://i.pravatar.cc/150?u=7', status: 'Active' },
+    { id: '2', name: 'Advocate Rina', designation: 'Member', phone: '01800000002', joinDate: '2021-03-15', photo: 'https://i.pravatar.cc/150?u=8', status: 'Active' },
 ];
 
 const mockNotices = [
   { id: '1', title: 'Eid Vacation Notice', date: '2023-10-15', status: 'Active', file: 'notice_eid.pdf' },
   { id: '2', title: 'Half Yearly Exam Schedule', date: '2023-11-01', status: 'Active', file: 'exam_routine.pdf' },
+];
+
+const mockAdmissionInfo = [
+    { id: '1', title: 'Admission Circular 2024', date: '2023-11-10', status: 'Active', file: 'circular_24.pdf' },
+    { id: '2', title: 'Fee Structure', date: '2023-01-01', status: 'Active', file: 'fees.pdf' },
+];
+
+const mockExamNotices = [
+    { id: '1', title: 'Final Exam Routine 2023', date: '2023-11-20', status: 'Active', file: 'final_routine.pdf' },
+    { id: '2', title: 'Admit Card Distribution', date: '2023-11-25', status: 'Active', file: 'admit_notice.pdf' },
+];
+
+const mockManualResults = [
+    { id: '1', name: 'Half Yearly 2023', class: '10', date: new Date().toISOString().split('T')[0], file: 'class10_halfyearly.pdf', status: 'Active' },
+    { id: '2', name: 'Model Test 2023', class: '8', date: '2023-08-15', file: 'class8_model.pdf', status: 'Active' },
 ];
 
 const mockStudents = [
@@ -76,6 +109,7 @@ const AppContent: React.FC = () => {
                         <GenericCRUDPage 
                             title={t('teachers')} 
                             columns={[
+                                { key: 'photo', label: 'Photo', type: 'image' },
                                 { key: 'name', label: t('name') },
                                 { key: 'designation', label: t('designation') },
                                 { key: 'subject', label: 'Subject' },
@@ -85,6 +119,54 @@ const AppContent: React.FC = () => {
                             initialData={mockTeachers} 
                         />
                     } />
+                    
+                    {/* Staff Section */}
+                    <Route path="/staff" element={
+                        <GenericCRUDPage 
+                            title="Staff & Employees" 
+                            columns={[
+                                { key: 'photo', label: 'Photo', type: 'image' },
+                                { key: 'name', label: t('name') },
+                                { key: 'designation', label: t('designation') },
+                                { key: 'phone', label: t('phone') },
+                                { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
+                            ]} 
+                            initialData={mockStaff} 
+                        />
+                    } />
+
+                    {/* Academic Section */}
+                    <Route path="/academic/chairman-message" element={
+                        <SingleContentPage 
+                            title="Chairman Message" 
+                            role="Chairman"
+                            initialContent="I am delighted to welcome you to our institution..." 
+                        />
+                    } />
+                    <Route path="/academic/principal-message" element={
+                        <SingleContentPage 
+                            title="Principal Message" 
+                            role="Principal"
+                            initialContent="Education is the backbone of a nation..." 
+                        />
+                    } />
+                    <Route path="/academic/committee" element={
+                        <GenericCRUDPage 
+                            title="Managing Committee" 
+                            columns={[
+                                { key: 'photo', label: 'Photo', type: 'image' },
+                                { key: 'name', label: t('name') },
+                                { key: 'designation', label: t('designation') },
+                                { key: 'phone', label: t('phone') },
+                                { key: 'joinDate', label: 'Join Date', type: 'date' },
+                                { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
+                            ]} 
+                            initialData={mockCommittee} 
+                        />
+                    } />
+                    <Route path="/academic/routine" element={<ClassRoutinePage />} />
+                    <Route path="/academic/holidays" element={<HolidayCalendarPage />} />
+
 
                     {/* Students Sections */}
                     {['6', '7', '8', '9', '10'].map(cls => (
@@ -102,6 +184,49 @@ const AppContent: React.FC = () => {
                             />
                         } />
                     ))}
+
+                    {/* Admission Section */}
+                    <Route path="/admission/info" element={
+                        <GenericCRUDPage 
+                            title="Admission Info & Requirements" 
+                            columns={[
+                                { key: 'title', label: 'Title' },
+                                { key: 'date', label: 'Publish Date', type: 'date' },
+                                { key: 'file', label: 'PDF Info', type: 'file', accept: '.pdf' },
+                                { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
+                            ]} 
+                            initialData={mockAdmissionInfo} 
+                        />
+                    } />
+                    <Route path="/admission/form" element={<AdmissionFormPage />} />
+
+                    {/* Exams & Results Section */}
+                    <Route path="/exams/notices" element={
+                        <GenericCRUDPage 
+                            title="Exam Notices" 
+                            columns={[
+                                { key: 'title', label: 'Notice Title' },
+                                { key: 'date', label: 'Date', type: 'date' },
+                                { key: 'file', label: 'PDF File', type: 'file', accept: '.pdf' },
+                                { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
+                            ]} 
+                            initialData={mockExamNotices} 
+                        />
+                    } />
+                    <Route path="/exams/manual-result" element={
+                        <GenericCRUDPage 
+                            title="Manual Results (PDF)" 
+                            columns={[
+                                { key: 'name', label: 'Result Name' },
+                                { key: 'class', label: 'Class', type: 'select', options: ['6','7','8','9','10'] },
+                                { key: 'date', label: 'Date', type: 'date' },
+                                { key: 'file', label: 'Result PDF', type: 'file', accept: '.pdf' },
+                                { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
+                            ]} 
+                            initialData={mockManualResults} 
+                        />
+                    } />
+                    <Route path="/exams/online-result" element={<OnlineResultPage />} />
 
                     {/* Notice Section */}
                     <Route path="/notice" element={
@@ -129,6 +254,10 @@ const AppContent: React.FC = () => {
                             initialData={mockLinks} 
                         />
                     } />
+                    
+                    {/* Gallery & Contact */}
+                    <Route path="/gallery" element={<GalleryPage />} />
+                    <Route path="/contact" element={<ContactPage />} />
 
                     {/* Settings */}
                     <Route path="/settings" element={<Settings />} />
