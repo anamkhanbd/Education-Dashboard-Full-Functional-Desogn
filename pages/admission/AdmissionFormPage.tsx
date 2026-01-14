@@ -61,7 +61,7 @@ export const AdmissionFormPage: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Admission Management</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t('admissionForm')}</h2>
             
             {/* Tabs */}
             <div className="flex border-b border-gray-200 dark:border-gray-700">
@@ -69,13 +69,13 @@ export const AdmissionFormPage: React.FC = () => {
                     onClick={() => setActiveTab('list')}
                     className={`px-6 py-3 font-medium text-sm transition-colors ${activeTab === 'list' ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'}`}
                 >
-                    Admission Requests ({requests.filter(r => r.status === 'Pending').length})
+                    {t('admissionRequests')} ({requests.filter(r => r.status === 'Pending').length})
                 </button>
                 <button 
                     onClick={() => setActiveTab('form')}
                     className={`px-6 py-3 font-medium text-sm transition-colors ${activeTab === 'form' ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'}`}
                 >
-                    New Admission Form
+                    {t('newAdmissionForm')}
                 </button>
             </div>
 
@@ -85,13 +85,13 @@ export const AdmissionFormPage: React.FC = () => {
                         <table className="w-full text-left">
                             <thead>
                                 <tr className="bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-300">
-                                    <th className="p-4">Applicant</th>
-                                    <th className="p-4">Father's Name</th>
-                                    <th className="p-4">Class</th>
-                                    <th className="p-4">Phone</th>
-                                    <th className="p-4">Date</th>
-                                    <th className="p-4">Status</th>
-                                    <th className="p-4 text-right">Actions</th>
+                                    <th className="p-4">{t('applicant')}</th>
+                                    <th className="p-4">{t('fatherName')}</th>
+                                    <th className="p-4">{t('class')}</th>
+                                    <th className="p-4">{t('phone')}</th>
+                                    <th className="p-4">{t('publishDate')}</th>
+                                    <th className="p-4">{t('status')}</th>
+                                    <th className="p-4 text-right">{t('actions')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,10 +116,10 @@ export const AdmissionFormPage: React.FC = () => {
                                         <td className="p-4 text-right flex justify-end gap-2">
                                             {req.status === 'Pending' && (
                                                 <>
-                                                    <button onClick={() => updateStatus(req.id, 'Approved')} className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100" title="Approve">
+                                                    <button onClick={() => updateStatus(req.id, 'Approved')} className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100" title={t('approve')}>
                                                         <Check size={18} />
                                                     </button>
-                                                    <button onClick={() => updateStatus(req.id, 'Rejected')} className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100" title="Reject">
+                                                    <button onClick={() => updateStatus(req.id, 'Rejected')} className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100" title={t('reject')}>
                                                         <X size={18} />
                                                     </button>
                                                 </>
@@ -132,16 +132,16 @@ export const AdmissionFormPage: React.FC = () => {
                     </div>
                 </Card>
             ) : (
-                <Card title="Student Admission Form">
+                <Card title={t('applicationForm')}>
                     <form onSubmit={handleFormSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Student Name</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('studentName')}</label>
                                 <input required type="text" className="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white" 
                                     value={formData.studentName} onChange={e => setFormData({...formData, studentName: e.target.value})} />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Class</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('class')}</label>
                                 <select required className="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     value={formData.class} onChange={e => setFormData({...formData, class: e.target.value})}>
                                     <option value="">Select Class</option>
@@ -153,39 +153,39 @@ export const AdmissionFormPage: React.FC = () => {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Father's Name</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('fatherName')}</label>
                                 <input required type="text" className="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     value={formData.fatherName} onChange={e => setFormData({...formData, fatherName: e.target.value})} />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mother's Name</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('motherName')}</label>
                                 <input required type="text" className="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     value={formData.motherName} onChange={e => setFormData({...formData, motherName: e.target.value})} />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date of Birth</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('dob')}</label>
                                 <input required type="date" className="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} />
                             </div>
                              <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Guardian Phone</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('guardianPhone')}</label>
                                 <input required type="tel" className="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
                             </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Address</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('address')}</label>
                             <textarea className="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white" rows={2}
                                 value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
                         </div>
                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Previous School (Optional)</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('prevSchool')}</label>
                             <input type="text" className="w-full p-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 value={formData.prevSchool} onChange={e => setFormData({...formData, prevSchool: e.target.value})} />
                         </div>
                         <div className="flex justify-end">
                             <button type="submit" className="px-6 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:brightness-110 flex items-center gap-2">
-                                <Save size={18} /> Submit Application
+                                <Save size={18} /> {t('submit')}
                             </button>
                         </div>
                     </form>

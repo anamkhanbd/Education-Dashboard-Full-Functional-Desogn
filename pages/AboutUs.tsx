@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Card } from '../components/UI/Card';
 import { Save } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export const AboutUsPage: React.FC = () => {
+    const { t } = useLanguage();
     const [content, setContent] = useState('Welcome to EduAdmin High School, a place of excellence...');
 
     const handleSave = () => {
@@ -11,12 +13,12 @@ export const AboutUsPage: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">About Us</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t('aboutUs')}</h2>
             
-            <Card title="Update Content">
+            <Card title={t('update')}>
                 <div className="space-y-4">
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Description
+                        {t('description')}
                     </label>
                     <textarea 
                         value={content}
@@ -29,13 +31,13 @@ export const AboutUsPage: React.FC = () => {
                             onClick={() => setContent('')}
                             className="px-4 py-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
                         >
-                            Clear
+                            {t('clear')}
                         </button>
                         <button 
                             onClick={handleSave}
                             className="flex items-center gap-2 px-6 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:brightness-110"
                         >
-                            <Save size={18} /> Save Content
+                            <Save size={18} /> {t('save')}
                         </button>
                     </div>
                 </div>

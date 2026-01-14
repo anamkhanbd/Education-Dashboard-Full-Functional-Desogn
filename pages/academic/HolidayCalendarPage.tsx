@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from '../../components/UI/Card';
 import { Calendar as CalendarIcon, Flag, ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 interface Holiday {
   id: string;
@@ -10,11 +11,12 @@ interface Holiday {
 }
 
 export const HolidayCalendarPage: React.FC = () => {
+    const { t } = useLanguage();
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newHoliday, setNewHoliday] = useState<Partial<Holiday>>({ type: 'School', date: new Date().toISOString().split('T')[0] });
     
-    // Mock Data - Bangladeshi Holidays (approximate dates for 2024)
+    // Mock Data
     const [holidays, setHolidays] = useState<Holiday[]>([
         { id: '1', date: '2024-02-21', title: 'Intl. Mother Language Day', type: 'Government' },
         { id: '2', date: '2024-03-17', title: 'Sheikh Mujibur Rahman Birthday', type: 'Government' },
@@ -67,7 +69,6 @@ export const HolidayCalendarPage: React.FC = () => {
         const startDayOffset = getFirstDayOfMonth(currentDate);
         const days = [];
 
-        // Empty cells for offset
         for (let i = 0; i < startDayOffset; i++) {
             days.push(<div key={`empty-${i}`} className="h-24 md:h-32 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700"></div>);
         }
@@ -79,7 +80,6 @@ export const HolidayCalendarPage: React.FC = () => {
             const dayStr = String(i).padStart(2, '0');
             const dateStr = `${year}-${month}-${dayStr}`;
             
-            // Check day of week for weekend calculation (5 = Friday, 6 = Saturday)
             const dateObj = new Date(year, currentDate.getMonth(), i);
             const dayOfWeek = dateObj.getDay();
             const isWeekend = dayOfWeek === 5 || dayOfWeek === 6;
@@ -108,7 +108,7 @@ export const HolidayCalendarPage: React.FC = () => {
                     <div className="mt-1 md:mt-2 space-y-1 overflow-y-auto max-h-[calc(100%-2rem)] custom-scrollbar">
                         {isWeekend && !dayHolidays.length && (
                             <div className="p-1 rounded text-[10px] md:text-xs font-medium truncate bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">
-                                Weekend
+                                {t('weekend')}
                             </div>
                         )}
                         {dayHolidays.map((h, idx) => (
@@ -134,13 +134,13 @@ export const HolidayCalendarPage: React.FC = () => {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                  <h2 className="text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
                     <CalendarIcon className="text-[var(--color-primary)]" />
-                    Academic Calendar
+                    {t('holidayList')}
                 </h2>
                 <button 
                     onClick={() => setIsModalOpen(true)}
                     className="flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:brightness-110"
                 >
-                    <Plus size={18} /> Add Holiday
+                    <Plus size={18} /> {t('add')}
                 </button>
             </div>
            
@@ -161,19 +161,19 @@ export const HolidayCalendarPage: React.FC = () => {
                     <div className="flex gap-4 text-sm">
                         <div className="flex items-center gap-2">
                             <span className="w-3 h-3 bg-red-500 rounded-full"></span>
-                            <span className="text-gray-600 dark:text-gray-300">Govt. Holiday (Fri/Sat)</span>
+                            <span className="text-gray-600 dark:text-gray-300">{t('govtHoliday')}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <span className="w-3 h-3 bg-blue-400 rounded-full"></span>
-                            <span className="text-gray-600 dark:text-gray-300">School Event</span>
+                            <span className="text-gray-600 dark:text-gray-300">{t('schoolHoliday')}</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-7 text-center mb-2">
-                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-                        <div key={d} className={`font-semibold py-2 text-sm md:text-base ${(d === 'Fri' || d === 'Sat') ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'}`}>
-                            {d}
+                    {[t('Sunday'), t('Monday'), t('Tuesday'), t('Wednesday'), t('Thursday'), t('Friday'), t('Saturday')].map((d, i) => (
+                        <div key={i} className={`font-semibold py-2 text-sm md:text-base ${(i === 5 || i === 6) ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'}`}>
+                            {d.substring(0, 3)}
                         </div>
                     ))}
                 </div>
@@ -184,7 +184,7 @@ export const HolidayCalendarPage: React.FC = () => {
             </Card>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card title="Upcoming Holidays">
+                <Card title={t('upcomingHolidays')}>
                     {upcomingHolidays.length > 0 ? (
                         <ul className="space-y-3">
                             {upcomingHolidays.map((h) => (
@@ -200,15 +200,15 @@ export const HolidayCalendarPage: React.FC = () => {
                             ))}
                         </ul>
                     ) : (
-                        <p className="text-gray-500 text-center py-4">No upcoming specific holidays found.</p>
+                        <p className="text-gray-500 text-center py-4">{t('noData')}</p>
                     )}
                 </Card>
-                 <Card title="Calendar Settings">
+                 <Card title={t('settings')}>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                         Manage academic sessions and holiday configurations. You can sync with the national database or add manual entries.
                     </p>
                     <button className="w-full py-2 bg-[var(--color-primary)] text-white rounded-lg hover:brightness-110">
-                        Sync National Holidays
+                        {t('syncNational')}
                     </button>
                 </Card>
             </div>
@@ -218,25 +218,24 @@ export const HolidayCalendarPage: React.FC = () => {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md p-6 space-y-4">
                         <div className="flex justify-between items-center border-b border-gray-100 dark:border-gray-700 pb-3">
-                            <h3 className="text-xl font-bold dark:text-white">Add New Holiday</h3>
+                            <h3 className="text-xl font-bold dark:text-white">{t('add')}</h3>
                             <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:bg-gray-100 rounded-full p-1">
                                 <X size={20} />
                             </button>
                         </div>
                         
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Holiday Title</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('title')}</label>
                             <input 
                                 type="text" 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 value={newHoliday.title || ''}
                                 onChange={(e) => setNewHoliday({...newHoliday, title: e.target.value})}
-                                placeholder="e.g. Summer Vacation"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Date</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('day')}</label>
                             <input 
                                 type="date" 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -246,20 +245,20 @@ export const HolidayCalendarPage: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Type</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('status')}</label>
                             <select 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 value={newHoliday.type}
                                 onChange={(e) => setNewHoliday({...newHoliday, type: e.target.value as any})}
                             >
-                                <option value="School">School Holiday</option>
-                                <option value="Government">Government Holiday</option>
+                                <option value="School">{t('schoolHoliday')}</option>
+                                <option value="Government">{t('govtHoliday')}</option>
                             </select>
                         </div>
 
                         <div className="flex justify-end gap-3 pt-4">
-                            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg dark:text-gray-300 dark:hover:bg-gray-700">Cancel</button>
-                            <button onClick={handleAddHoliday} className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg">Add Holiday</button>
+                            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg dark:text-gray-300 dark:hover:bg-gray-700">{t('cancel')}</button>
+                            <button onClick={handleAddHoliday} className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg">{t('add')}</button>
                         </div>
                     </div>
                 </div>

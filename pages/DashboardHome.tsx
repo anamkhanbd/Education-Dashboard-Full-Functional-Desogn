@@ -74,7 +74,7 @@ export const DashboardHome: React.FC = () => {
           isPositive={false} 
         />
         <StatCard 
-          title="Total Revenue" 
+          title={t('totalRevenue')} 
           value="$24,500" 
           icon={DollarSign} 
           trend="+8.5%" 
@@ -84,15 +84,15 @@ export const DashboardHome: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Class Wise Data */}
-        <Card title="Class Wise Data" className="lg:col-span-2">
+        <Card title={t('classWiseData')} className="lg:col-span-2">
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
                     <thead>
                         <tr className="border-b border-gray-100 dark:border-gray-700">
-                            <th className="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">Class</th>
-                            <th className="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">Total Students</th>
-                            <th className="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">Sections</th>
-                            <th className="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">Class Teacher</th>
+                            <th className="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">{t('class')}</th>
+                            <th className="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">{t('totalStudents')}</th>
+                            <th className="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">{t('section')}</th>
+                            <th className="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">{t('teacher')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,14 +110,14 @@ export const DashboardHome: React.FC = () => {
         </Card>
 
         {/* General Info */}
-        <Card title="General Information" className="lg:col-span-1">
+        <Card title={t('generalInfo')} className="lg:col-span-1">
             <div className="space-y-4">
                 <div className="flex items-start gap-3">
                     <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mt-1">
                         <School size={20} />
                     </div>
                     <div>
-                        <h4 className="font-semibold text-gray-800 dark:text-white">School Name</h4>
+                        <h4 className="font-semibold text-gray-800 dark:text-white">{t('schoolName')}</h4>
                         <p className="text-sm text-gray-500 dark:text-gray-400">EduAdmin High School</p>
                     </div>
                 </div>
@@ -126,7 +126,7 @@ export const DashboardHome: React.FC = () => {
                         <Book size={20} />
                     </div>
                     <div>
-                        <h4 className="font-semibold text-gray-800 dark:text-white">Academic Year</h4>
+                        <h4 className="font-semibold text-gray-800 dark:text-white">{t('academicYear')}</h4>
                         <p className="text-sm text-gray-500 dark:text-gray-400">2023 - 2024</p>
                     </div>
                 </div>
@@ -135,12 +135,12 @@ export const DashboardHome: React.FC = () => {
                         <Calendar size={20} />
                     </div>
                     <div>
-                        <h4 className="font-semibold text-gray-800 dark:text-white">Today's Date</h4>
+                        <h4 className="font-semibold text-gray-800 dark:text-white">{t('todaysDate')}</h4>
                         <p className="text-sm text-gray-500 dark:text-gray-400">{new Date().toLocaleDateString()}</p>
                     </div>
                 </div>
                  <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
-                    <h4 className="font-semibold text-gray-800 dark:text-white mb-2">System Status</h4>
+                    <h4 className="font-semibold text-gray-800 dark:text-white mb-2">{t('systemStatus')}</h4>
                     <div className="flex items-center gap-2 text-sm text-green-500">
                         <span className="w-2 h-2 rounded-full bg-green-500"></span>
                         All systems operational

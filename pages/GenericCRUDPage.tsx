@@ -156,7 +156,7 @@ export const GenericCRUDPage: React.FC<GenericCRUDPageProps> = ({ title, columns
           </table>
           {filteredData.length === 0 && (
             <div className="text-center py-10 text-gray-500 dark:text-gray-400">
-              No data found
+              {t('noData')}
             </div>
           )}
         </div>
@@ -168,7 +168,7 @@ export const GenericCRUDPage: React.FC<GenericCRUDPageProps> = ({ title, columns
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
               <h3 className="text-xl font-bold text-gray-800 dark:text-white">
-                {editingItem ? t('edit') : t('add')} {title}
+                {editingItem ? t('edit') : t('add')}
               </h3>
               <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:bg-gray-100 rounded-full p-1">
                 <X size={20} />

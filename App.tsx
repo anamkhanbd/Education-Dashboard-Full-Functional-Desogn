@@ -109,10 +109,10 @@ const AppContent: React.FC = () => {
                         <GenericCRUDPage 
                             title={t('teachers')} 
                             columns={[
-                                { key: 'photo', label: 'Photo', type: 'image' },
+                                { key: 'photo', label: t('photo'), type: 'image' },
                                 { key: 'name', label: t('name') },
                                 { key: 'designation', label: t('designation') },
-                                { key: 'subject', label: 'Subject' },
+                                { key: 'subject', label: t('subject') },
                                 { key: 'phone', label: t('phone') },
                                 { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
                             ]} 
@@ -123,9 +123,9 @@ const AppContent: React.FC = () => {
                     {/* Staff Section */}
                     <Route path="/staff" element={
                         <GenericCRUDPage 
-                            title="Staff & Employees" 
+                            title={t('employees')} 
                             columns={[
-                                { key: 'photo', label: 'Photo', type: 'image' },
+                                { key: 'photo', label: t('photo'), type: 'image' },
                                 { key: 'name', label: t('name') },
                                 { key: 'designation', label: t('designation') },
                                 { key: 'phone', label: t('phone') },
@@ -138,27 +138,27 @@ const AppContent: React.FC = () => {
                     {/* Academic Section */}
                     <Route path="/academic/chairman-message" element={
                         <SingleContentPage 
-                            title="Chairman Message" 
+                            title={t('chairmanMessage')} 
                             role="Chairman"
                             initialContent="I am delighted to welcome you to our institution..." 
                         />
                     } />
                     <Route path="/academic/principal-message" element={
                         <SingleContentPage 
-                            title="Principal Message" 
+                            title={t('principalMessage')} 
                             role="Principal"
                             initialContent="Education is the backbone of a nation..." 
                         />
                     } />
                     <Route path="/academic/committee" element={
                         <GenericCRUDPage 
-                            title="Managing Committee" 
+                            title={t('managingCommittee')} 
                             columns={[
-                                { key: 'photo', label: 'Photo', type: 'image' },
+                                { key: 'photo', label: t('photo'), type: 'image' },
                                 { key: 'name', label: t('name') },
                                 { key: 'designation', label: t('designation') },
                                 { key: 'phone', label: t('phone') },
-                                { key: 'joinDate', label: 'Join Date', type: 'date' },
+                                { key: 'joinDate', label: t('joinDate'), type: 'date' },
                                 { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
                             ]} 
                             initialData={mockCommittee} 
@@ -172,12 +172,12 @@ const AppContent: React.FC = () => {
                     {['6', '7', '8', '9', '10'].map(cls => (
                          <Route key={cls} path={`/students/${cls}`} element={
                             <GenericCRUDPage 
-                                title={`${t('students')} - Class ${cls}`} 
+                                title={`${t('students')} - ${t('class')} ${cls}`} 
                                 columns={[
                                     { key: 'roll', label: t('roll'), type: 'number' },
                                     { key: 'name', label: t('name') },
                                     { key: 'section', label: t('section') },
-                                    { key: 'guardianPhone', label: 'Guardian Phone' },
+                                    { key: 'guardianPhone', label: t('guardianPhone') },
                                     { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
                                 ]} 
                                 initialData={mockStudents} 
@@ -188,11 +188,11 @@ const AppContent: React.FC = () => {
                     {/* Admission Section */}
                     <Route path="/admission/info" element={
                         <GenericCRUDPage 
-                            title="Admission Info & Requirements" 
+                            title={t('admissionInfo')} 
                             columns={[
-                                { key: 'title', label: 'Title' },
-                                { key: 'date', label: 'Publish Date', type: 'date' },
-                                { key: 'file', label: 'PDF Info', type: 'file', accept: '.pdf' },
+                                { key: 'title', label: t('title') },
+                                { key: 'date', label: t('publishDate'), type: 'date' },
+                                { key: 'file', label: t('pdfFile'), type: 'file', accept: '.pdf' },
                                 { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
                             ]} 
                             initialData={mockAdmissionInfo} 
@@ -203,11 +203,11 @@ const AppContent: React.FC = () => {
                     {/* Exams & Results Section */}
                     <Route path="/exams/notices" element={
                         <GenericCRUDPage 
-                            title="Exam Notices" 
+                            title={t('examNotices')} 
                             columns={[
-                                { key: 'title', label: 'Notice Title' },
-                                { key: 'date', label: 'Date', type: 'date' },
-                                { key: 'file', label: 'PDF File', type: 'file', accept: '.pdf' },
+                                { key: 'title', label: t('title') },
+                                { key: 'date', label: t('publishDate'), type: 'date' },
+                                { key: 'file', label: t('pdfFile'), type: 'file', accept: '.pdf' },
                                 { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
                             ]} 
                             initialData={mockExamNotices} 
@@ -215,12 +215,12 @@ const AppContent: React.FC = () => {
                     } />
                     <Route path="/exams/manual-result" element={
                         <GenericCRUDPage 
-                            title="Manual Results (PDF)" 
+                            title={t('manualResult')} 
                             columns={[
-                                { key: 'name', label: 'Result Name' },
-                                { key: 'class', label: 'Class', type: 'select', options: ['6','7','8','9','10'] },
-                                { key: 'date', label: 'Date', type: 'date' },
-                                { key: 'file', label: 'Result PDF', type: 'file', accept: '.pdf' },
+                                { key: 'name', label: t('resultName') },
+                                { key: 'class', label: t('class'), type: 'select', options: ['6','7','8','9','10'] },
+                                { key: 'date', label: t('publishDate'), type: 'date' },
+                                { key: 'file', label: t('pdfFile'), type: 'file', accept: '.pdf' },
                                 { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
                             ]} 
                             initialData={mockManualResults} 
@@ -233,9 +233,9 @@ const AppContent: React.FC = () => {
                         <GenericCRUDPage 
                             title={t('notice')} 
                             columns={[
-                                { key: 'title', label: 'Title' },
-                                { key: 'date', label: 'Date', type: 'date' },
-                                { key: 'file', label: 'PDF File', type: 'file', accept: '.pdf' },
+                                { key: 'title', label: t('title') },
+                                { key: 'date', label: t('publishDate'), type: 'date' },
+                                { key: 'file', label: t('pdfFile'), type: 'file', accept: '.pdf' },
                                 { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
                             ]} 
                             initialData={mockNotices} 
@@ -245,11 +245,11 @@ const AppContent: React.FC = () => {
                     {/* Main Menu (Previously Important Links) */}
                     <Route path="/main-menu" element={
                          <GenericCRUDPage 
-                            title="Main Menu List"
+                            title={t('mainMenu')}
                             columns={[
-                                { key: 'title', label: 'Menu Title' },
-                                { key: 'url', label: 'URL / Link' },
-                                { key: 'status', label: 'Status', type: 'select', options: ['Active', 'Inactive'] }
+                                { key: 'title', label: t('menuTitle') },
+                                { key: 'url', label: t('urlLink') },
+                                { key: 'status', label: t('status'), type: 'select', options: ['Active', 'Inactive'] }
                             ]} 
                             initialData={mockLinks} 
                         />
@@ -266,10 +266,10 @@ const AppContent: React.FC = () => {
                     <Route path="*" element={
                         <div className="flex flex-col items-center justify-center h-full text-center p-8">
                             <div className="w-64 h-64 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse mb-4 flex items-center justify-center">
-                                <span className="text-gray-400 text-sm">Content Placeholder</span>
+                                <span className="text-gray-400 text-sm">{t('underConstruction')}</span>
                             </div>
-                            <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-300">Under Construction</h2>
-                            <p className="text-gray-500 dark:text-gray-400 mt-2">This section is part of the full dashboard architecture.</p>
+                            <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-300">{t('underConstruction')}</h2>
+                            <p className="text-gray-500 dark:text-gray-400 mt-2">{t('underConstructionMsg')}</p>
                         </div>
                     } />
                 </Routes>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from '../../components/UI/Card';
 import { Plus, Trash2 } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 interface RoutineItem {
     id: string;
@@ -10,18 +11,20 @@ interface RoutineItem {
     teacher: string;
 }
 
-const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
 const PERIODS = [1, 2, 3, 4, 5, 6, 7];
 
 export const ClassRoutinePage: React.FC = () => {
+    const { t } = useLanguage();
+    const DAYS = [t('Sunday'), t('Monday'), t('Tuesday'), t('Wednesday'), t('Thursday')];
+    
     const [selectedClass, setSelectedClass] = useState('10');
     const [routine, setRoutine] = useState<RoutineItem[]>([
-        { id: '1', day: 'Sunday', period: 1, subject: 'Mathematics', teacher: 'R. Uddin' },
-        { id: '2', day: 'Sunday', period: 2, subject: 'English', teacher: 'K. Ahmed' },
-        { id: '3', day: 'Monday', period: 1, subject: 'Bangla', teacher: 'S. Begum' },
+        { id: '1', day: t('Sunday'), period: 1, subject: 'Mathematics', teacher: 'R. Uddin' },
+        { id: '2', day: t('Sunday'), period: 2, subject: 'English', teacher: 'K. Ahmed' },
+        { id: '3', day: t('Monday'), period: 1, subject: 'Bangla', teacher: 'S. Begum' },
     ]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [newItem, setNewItem] = useState<Partial<RoutineItem>>({ day: 'Sunday', period: 1 });
+    const [newItem, setNewItem] = useState<Partial<RoutineItem>>({ day: t('Sunday'), period: 1 });
 
     const getRoutineFor = (day: string, period: number) => {
         return routine.find(r => r.day === day && r.period === period);
@@ -37,7 +40,7 @@ export const ClassRoutinePage: React.FC = () => {
                 teacher: newItem.teacher! 
             }]);
             setIsModalOpen(false);
-            setNewItem({ day: 'Sunday', period: 1 });
+            setNewItem({ day: t('Sunday'), period: 1 });
         }
     };
 
@@ -50,7 +53,7 @@ export const ClassRoutinePage: React.FC = () => {
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Class Routine</h2>
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t('classRoutine')}</h2>
                 <div className="flex gap-3">
                     <select 
                         value={selectedClass}
@@ -67,7 +70,7 @@ export const ClassRoutinePage: React.FC = () => {
                         onClick={() => setIsModalOpen(true)}
                         className="flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:brightness-110"
                     >
-                        <Plus size={18} /> <span className="hidden sm:inline">Add Class</span>
+                        <Plus size={18} /> <span className="hidden sm:inline">{t('add')}</span>
                     </button>
                 </div>
             </div>
@@ -76,10 +79,10 @@ export const ClassRoutinePage: React.FC = () => {
                 <table className="w-full text-center border-collapse min-w-[800px]">
                     <thead>
                         <tr className="bg-gray-100 dark:bg-gray-800">
-                            <th className="p-3 border border-gray-200 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-200 w-32">Day / Period</th>
+                            <th className="p-3 border border-gray-200 dark:border-gray-700 font-bold text-gray-700 dark:text-gray-200 w-32">{t('day')} / {t('period')}</th>
                             {PERIODS.map(p => (
                                 <th key={p} className="p-3 border border-gray-200 dark:border-gray-700 font-semibold text-gray-700 dark:text-gray-200">
-                                    {p}{p === 1 ? 'st' : p === 2 ? 'nd' : p === 3 ? 'rd' : 'th'} Period
+                                    {p}{p === 1 ? 'st' : p === 2 ? 'nd' : p === 3 ? 'rd' : 'th'} {t('period')}
                                 </th>
                             ))}
                         </tr>
@@ -121,10 +124,10 @@ export const ClassRoutinePage: React.FC = () => {
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md p-6 space-y-4">
-                        <h3 className="text-xl font-bold dark:text-white">Add Class to Routine</h3>
+                        <h3 className="text-xl font-bold dark:text-white">{t('add')}</h3>
                         
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Day</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('day')}</label>
                             <select 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 value={newItem.day}
@@ -135,7 +138,7 @@ export const ClassRoutinePage: React.FC = () => {
                         </div>
                         
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Period</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('period')}</label>
                             <select 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 value={newItem.period}
@@ -146,7 +149,7 @@ export const ClassRoutinePage: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Subject</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('subject')}</label>
                             <input 
                                 type="text" 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -157,7 +160,7 @@ export const ClassRoutinePage: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Teacher</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('teacher')}</label>
                             <input 
                                 type="text" 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -168,8 +171,8 @@ export const ClassRoutinePage: React.FC = () => {
                         </div>
 
                         <div className="flex justify-end gap-3 pt-4">
-                            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg dark:text-gray-300 dark:hover:bg-gray-700">Cancel</button>
-                            <button onClick={handleAdd} className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg">Add</button>
+                            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg dark:text-gray-300 dark:hover:bg-gray-700">{t('cancel')}</button>
+                            <button onClick={handleAdd} className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg">{t('add')}</button>
                         </div>
                     </div>
                 </div>

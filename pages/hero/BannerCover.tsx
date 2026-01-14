@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from '../../components/UI/Card';
 import { Plus, Trash2, Edit2, Image as ImageIcon } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 interface BannerImage {
     id: string;
@@ -10,6 +11,7 @@ interface BannerImage {
 }
 
 export const BannerCoverPage: React.FC = () => {
+    const { t } = useLanguage();
     const [images, setImages] = useState<BannerImage[]>([
         { id: '1', url: 'https://picsum.photos/800/400?random=1', type: 'Banner', title: 'Main Hero Banner' },
         { id: '2', url: 'https://picsum.photos/800/400?random=2', type: 'Cover', title: 'Event Cover 2023' }
@@ -38,12 +40,12 @@ export const BannerCoverPage: React.FC = () => {
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Banner & Cover Images</h2>
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{t('bannerCover')}</h2>
                 <button 
                     onClick={() => setIsModalOpen(true)}
                     className="flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:brightness-110"
                 >
-                    <Plus size={18} /> Add New
+                    <Plus size={18} /> {t('add')}
                 </button>
             </div>
 
@@ -75,10 +77,10 @@ export const BannerCoverPage: React.FC = () => {
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md p-6 space-y-4">
-                        <h3 className="text-xl font-bold dark:text-white">Add New Image</h3>
+                        <h3 className="text-xl font-bold dark:text-white">{t('add')}</h3>
                         
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Title</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('title')}</label>
                             <input 
                                 type="text" 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -88,7 +90,7 @@ export const BannerCoverPage: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Type</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('status')}</label>
                             <select 
                                 className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 value={newItem.type}
@@ -100,13 +102,13 @@ export const BannerCoverPage: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">Upload Image</label>
+                            <label className="block text-sm font-medium mb-1 dark:text-gray-300">{t('upload')}</label>
                             <input type="file" className="w-full text-sm dark:text-gray-300" accept="image/*" />
                         </div>
 
                         <div className="flex justify-end gap-3 pt-4">
-                            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg dark:text-gray-300 dark:hover:bg-gray-700">Cancel</button>
-                            <button onClick={handleAdd} className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg">Save</button>
+                            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg dark:text-gray-300 dark:hover:bg-gray-700">{t('cancel')}</button>
+                            <button onClick={handleAdd} className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg">{t('save')}</button>
                         </div>
                     </div>
                 </div>

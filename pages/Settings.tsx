@@ -21,7 +21,7 @@ export const Settings: React.FC = () => {
       <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">{t('themeControl')}</h2>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card title="Appearance" className="h-full">
+        <Card title={t('appearance')} className="h-full">
             <div className="space-y-6">
                 <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
                     <div className="flex items-center gap-3">
@@ -57,7 +57,7 @@ export const Settings: React.FC = () => {
             </div>
         </Card>
 
-        <Card title="Brand Colors" className="h-full">
+        <Card title={t('brandColors')} className="h-full">
             <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -87,7 +87,7 @@ export const Settings: React.FC = () => {
                 </div>
 
                 <div>
-                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Quick Presets</p>
+                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('quickPresets')}</p>
                     <div className="flex flex-wrap gap-3">
                         {presetColors.map((preset, idx) => (
                             <button
